@@ -1,0 +1,385 @@
+<div class="dark-theme" layout="row" flex="100" style="height:100%;" fullscreen>
+  <div [style.width.px]="(expandedRail == true) ? '200' : '56'" style="height:100%;" layout="column" layout-align="start center" flex="none">
+    <mat-nav-list dense [style.width.%]="100">
+      <a mat-list-item (click)="toggleRail()">
+        <mat-icon *ngIf="!expandedRail"  matListIcon class="fill-deep-orange-300" svgIcon="assets:teradata-icon"></mat-icon>
+        <mat-icon *ngIf="expandedRail" matListIcon>menu</mat-icon>
+        <mat-icon *ngIf="expandedRail" flex class="push-left push-right" svgIcon="assets:teradata"></mat-icon>
+      </a>
+      <a mat-menu-item href="https://adhoc-homepage.stackblitz.io/">
+        <mat-icon matListIcon matTooltip="Home" matTooltipPosition="after">home</mat-icon>
+        <h3 *ngIf="expandedRail" matLine>Home</h3>
+      </a>
+      <mat-divider class="push-sm"></mat-divider>
+      <a mat-list-item class="active">
+        <mat-icon matListIcon matTooltip="Editor" matTooltipPosition="after" color="accent">code</mat-icon>
+        <h3 *ngIf="expandedRail" matLine>Editor</h3>
+      </a>
+      <a mat-list-item>
+        <mat-icon matListIcon matTooltip="Workflows" matTooltipPosition="after">clear_all</mat-icon>
+        <h3 *ngIf="expandedRail" matLine>Workflows</h3>
+      </a>
+      <a mat-list-item [mat-menu-trigger-for]="manage">
+        <mat-icon matListIcon matTooltip="Manage" matTooltipPosition="after">list</mat-icon>
+        <h3 *ngIf="expandedRail" matLine>Manage</h3>
+        <mat-menu xPosition="after" yPosition="below" #manage="matMenu">
+          <button mat-menu-item>
+            <span>Labs</span>
+          </button>
+          <a mat-menu-item href="https://object-storage-overview.stackblitz.io/">
+            <span>Object Storage</span>
+          </a>
+          <button mat-menu-item>
+            <span>Systems</span>
+          </button>
+        </mat-menu>
+      </a>
+      <mat-divider class="push-sm"></mat-divider>
+      <a mat-list-item [mat-menu-trigger-for]="settings">
+        <mat-icon matListIcon matTooltip="Settings" matTooltipPosition="after">settings</mat-icon>
+        <h3 *ngIf="expandedRail" matLine>Settings</h3>
+        <mat-menu xPosition="after" yPosition="below" #settings="matMenu">
+          <button mat-menu-item>
+            <span>Light mode</span>
+          </button>
+          <button mat-menu-item>
+            <span>Notification settings</span>
+          </button>
+          <button mat-menu-item>
+            <span>Editor preferences</span>
+          </button>
+        </mat-menu>
+      </a>
+    </mat-nav-list>
+    <span flex></span>
+    <mat-divider class="push-sm"></mat-divider>
+    <mat-nav-list dense [style.width.%]="100">
+      <a mat-list-item [matMenuTriggerFor]="notificationsMenu">
+        <td-notification-count *ngIf="!expandedRail" class="pull-left-sm" color="accent" [notifications]="5" [limit]=50>
+          <mat-icon matListIcon matTooltip="Notifications" matTooltipPosition="after">notifications</mat-icon>
+        </td-notification-count>
+        <mat-icon matListIcon *ngIf="expandedRail" matTooltip="Notifications" matTooltipPosition="after">notifications</mat-icon>
+        <h3 matLine *ngIf="expandedRail">Notifications</h3>
+        <td-notification-count *ngIf="expandedRail" color="accent" [notifications]="5" [limit]=50></td-notification-count>
+        <mat-menu #notificationsMenu="matMenu" xPosition="after" yPosition="below" [overlapTrigger]="false">
+          <td-menu>
+            <div td-menu-header class="mat-subheading-2 push-none">Notifications</div>
+            <mat-nav-list dense>
+              <ng-template let-item let-last="last" ngFor [ngForOf]="[0,1,2,3,4]">
+                <a mat-list-item>
+                  <mat-icon matListAvatar>today</mat-icon>
+                  <h4 matLine><span class="text-wrap">Notification subject</span></h4>
+                  <p matLine>Notification message and details</p>
+                </a>
+                <mat-divider *ngIf="!last"></mat-divider>
+              </ng-template>
+            </mat-nav-list>
+            <button mat-button color="accent" td-menu-footer>
+              See All Notifications
+            </button>
+          </td-menu>
+        </mat-menu>
+      </a>
+      <a mat-list-item [matMenuTriggerFor]="help">
+        <mat-icon matListIcon matTooltip="Help" matTooltipPosition="after">help</mat-icon>
+        <h3 *ngIf="expandedRail" matLine>Help</h3>
+        <mat-menu xPosition="after" yPosition="below" #help="matMenu">
+          <button mat-menu-item>
+            <span>Getting started</span>
+          </button>
+          <button mat-menu-item>
+            <span>Guided tour</span>
+          </button>
+          <button mat-menu-item>
+            <span>Documentation</span>
+          </button>
+          <button mat-menu-item>
+            <span>Forums / Community</span>
+          </button>
+          <mat-divider></mat-divider>
+          <button mat-menu-item>
+            <span>Support</span>
+          </button>
+        </mat-menu>
+      </a>
+      <a mat-list-item>
+        <mat-icon matListIcon matTooltip="Account" matTooltipPosition="after">person</mat-icon>
+        <h3 *ngIf="expandedRail" matLine>Account</h3>
+      </a>
+      <a mat-list-item [matMenuTriggerFor]="otherApplications">
+        <mat-icon matListIcon matTooltip="Other applications" matTooltipPosition="after">apps</mat-icon>
+        <h3 *ngIf="expandedRail" matLine>Other applications</h3>
+        <mat-menu #otherApplications="matMenu" [overlapTrigger]="false">
+          <td-menu>
+            <div layout="row">
+              <button mat-button>
+                <mat-icon color="accent">settings</mat-icon>
+                <div class="mat-subheading-2">Console</div>
+              </button>
+              <button mat-button>
+                <mat-icon color="accent">store</mat-icon>
+                <div class="mat-subheading-2">AppCenter</div>
+              </button>
+              <button mat-button>
+                <mat-icon color="accent">insert_chart</mat-icon>
+                <div class="mat-subheading-2">Analyst</div>
+              </button>
+            </div>
+          </td-menu>
+        </mat-menu>
+      </a>
+      <mat-divider class="push-sm"></mat-divider>
+      <a mat-list-item (click)="toggleRail()">
+        <mat-icon *ngIf="expandedRail">chevron_left</mat-icon>
+        <mat-icon *ngIf="!expandedRail" matTooltip="Expand" matTooltipPosition="after">chevron_right</mat-icon>
+        <h3 *ngIf="expandedRail" matLine>Collapse</h3>
+      </a>
+    </mat-nav-list>
+  </div>
+  <div flex layout-fill layout="column" class="bgc-contrast relative">
+    <td-layout-manage-list opened="true" mode="side">
+     <div td-sidenav-content class="pad-top-xs pad-bottom-xs pad-left pad-right-sm mat-whiteframe-z1" layout="row" layout-align="start center">
+       <span flex>Editor</span>
+      <span>
+        <button mat-icon-button matTooltip="Add data" [mat-menu-trigger-for]="add">
+          <mat-icon>add</mat-icon>
+        </button>
+        <mat-menu xPosition="before" #add="matMenu">
+          <button mat-menu-item>
+            <span>New lab</span>
+          </button>
+          <button mat-menu-item>
+            <span>Upload CSV</span>
+          </button>
+        </mat-menu>
+      </span>
+     </div>
+     <div td-sidenav-content layout="row">
+        <div flex class="overflow-hidden pad-left-xs">
+          <td-search-box class="pull-top-xs pull-bottom-xs text-md" dense placeholder="filter" [showUnderline]="false" backIcon="search"
+            alwaysVisible="true">
+          </td-search-box>
+        </div>
+        <span>
+        <button class="push-right push-top-xs mat-button-sm" mat-icon-button matTooltip="Sort" [mat-menu-trigger-for]="sort">
+          <mat-icon>filter_list</mat-icon>
+        </button>
+        <mat-menu xPosition="before" #sort="matMenu">
+          <button mat-menu-item>
+            <span>Show all</span>
+          </button>
+          <button mat-menu-item>
+            <span>Databases</span>
+          </button>
+          <button mat-menu-item>
+            <span>Tables</span>
+          </button>
+          <button mat-menu-item>
+            <span>Labs</span>
+          </button>
+          <button mat-menu-item>
+            <span>Views</span>
+          </button>
+          <button mat-menu-item>
+            <span>Functions</span>
+          </button>
+          <button mat-menu-item>
+            <span>Indexes</span>
+          </button>
+          <button mat-menu-item>
+            <span>Stats</span>
+          </button>
+        </mat-menu>
+      </span>
+     </div>
+     <mat-divider td-sidenav-content></mat-divider>
+     <div td-sidenav-content layout="row">
+       <mat-select class="pad text-sm" [(value)]="activeConnection">
+        <mat-option *ngFor="let connection of connections" [value]="connection.value">
+          {{connection.viewValue}} - {{connection.user}}
+        </mat-option>
+        <mat-divider></mat-divider>
+        <mat-option>New connection</mat-option>
+      </mat-select>
+     </div>
+     <mat-divider td-sidenav-content></mat-divider>
+     <div td-sidenav-content>
+       <div class="mat-content">
+         <mat-tree dense [dataSource]="treeDataSource" [treeControl]="treeControl" class="mat-tree pad-left-xs pad-right-sm">
+            <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
+              <li>
+                <mat-nav-list dense class="mat-tree-node pad-left" layout="row">
+                  <button class="mat-button-sm" mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name">
+                    <mat-icon [@tdRotate]="{ value: !treeControl.isExpanded(node), params: { duration: 50, degreesEnd: -90 }}"
+                      class="mat-icon-rtl-mirror">
+                      arrow_drop_down
+                    </mat-icon>
+                  </button>
+                  <a mat-list-item disableRipple flex class="text-truncate">{{node.name}}</a>
+                  <button class="mat-button-sm" mat-icon-button>
+                    <mat-icon class="tc-faded text-lg pull-top-xs">more_vert</mat-icon>
+                  </button>
+                </mat-nav-list>
+                <ul [class.mat-tree-invisible]="!treeControl.isExpanded(node)">
+                  <ng-container matTreeNodeOutlet></ng-container>
+                </ul>
+              </li>
+            </mat-nested-tree-node>
+            <!-- This is the tree node template for leaf nodes -->
+            <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
+              <li class="pad-left-md" flex>
+                <mat-nav-list dense class="mat-tree-node" layout="row">
+                  <a mat-list-item disableRipple flex class="text-truncate">{{node.name}}</a>
+                  <button class="mat-button-sm" mat-icon-button>
+                    <mat-icon class="tc-faded text-lg pull-top-xs">more_vert</mat-icon>
+                  </button>
+                </mat-nav-list>
+              </li>
+            </mat-tree-node>
+            
+          </mat-tree>
+       </div>
+     </div>
+     <div layout="column" flex layout-fill>
+       <div class="mat-whiteframe-z1 pad-right" layout="row">
+        <nav mat-tab-nav-bar>
+          <a mat-tab-link [active]='true'> script_name </a>
+          <a mat-tab-link> untitled </a>
+          <a mat-tab-link> untitled (2) </a>
+          <a mat-tab-link> untitled (3) </a>
+        </nav>
+        <span flex></span>
+        <button mat-icon-button matTooltip="Hide / show panels" [mat-menu-trigger-for]="panels">
+          <mat-icon>aspect_ration</mat-icon>
+        </button>
+        <mat-menu xPosition="before" #panels="matMenu">
+          <button mat-menu-item>
+            <mat-icon>view_stream</mat-icon>
+            <span>Hide left panel</span>
+          </button>
+          <button mat-menu-item>
+            <mat-icon>view_day</mat-icon>
+            <span>Hide right panel</span>
+          </button>
+          <button mat-menu-item>
+            <mat-icon>view_carousel</mat-icon>
+            <span>Hide bottom panel</span>
+          </button>
+          <button mat-menu-item>
+            <mat-icon>vertical_split</mat-icon>
+            <span>Hide editor</span>
+          </button>
+          <mat-divider></mat-divider>
+          <button mat-menu-item>
+            <mat-icon>view_agenda</mat-icon>
+            <span>Hide all panels</span>
+          </button>
+          <button mat-menu-item>
+            <mat-icon>view_quilt</mat-icon>
+            <span>Show all panels</span>
+          </button>
+        </mat-menu>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="pad-sm" layout="row">
+        <button mat-flat-button color="accent" class="text-upper mat-button-sm">Run</button>
+        <button mat-flat-button color="primary" class="text-upper push-left-sm mat-button-sm">Save</button>
+        <span flex></span>
+        <mat-button-toggle value="outline" aria-label="Toggle outline">
+          <mat-icon>toc</mat-icon>
+        </mat-button-toggle>
+      </div>
+      <mat-divider></mat-divider>
+       <td-code-editor style="height: 300px" class="editor" flex [language]="'sql'" [(ngModel)]="editorVal"></td-code-editor>
+       <div class="mat-whiteframe-z1 pad-right" layout="row">
+        <nav mat-tab-nav-bar>
+          <a mat-tab-link class='text-upper' [active]='true'> Preview </a>
+          <a mat-tab-link class='text-upper'> Schema </a>
+          <a mat-tab-link class='text-upper'> Metadata </a>
+          <a mat-tab-link class='text-upper'> Permissions </a>
+        </nav>
+        <span flex></span>
+        <button mat-icon-button matTooltip="Advanced filters">
+          <mat-icon>filter_list</mat-icon>
+        </button>
+      </div>
+
+      <div layout="row" layout-align="start center" [class.bgc-teal-900]='selectedRowNum'>
+        <ng-container *ngIf='!selectedRowNum'>
+          <td-search-box class="push-left-xs pull-top-sm pull-bottom-sm" dense placeholder="search" [showUnderline]="false" backIcon="search"
+            alwaysVisible="true">
+          </td-search-box>
+        </ng-container>
+      
+        <!-- <span flex></span> -->
+        <div *ngIf='selectedRowNum' flex layout='row' layout-align='start center' class='edit-trans'>
+          <span flex class='pad tc-grey-700 push-right'>{{ selectedRowNum }} items selected</span>
+          <button mat-icon-button class='push-right-sm push-left-md'>
+          <mat-icon>delete</mat-icon>
+          </button>
+          <button mat-icon-button>
+          <mat-icon>more_vert</mat-icon>
+          </button>
+          </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div flex class="mat-content">
+        <table style="width:100%;background:none" mat-table multiTemplateDataRows [dataSource]="dataSource">
+
+          <!-- Checkbox Column -->
+          <ng-container matColumnDef="select">
+            <th mat-header-cell *matHeaderCellDef>
+              <mat-checkbox (change)="$event ? masterToggle() : null"
+                            [checked]="selection.hasValue() && isAllSelected()"
+                            [indeterminate]="selection.hasValue() && !isAllSelected()"
+                            [aria-label]="checkboxLabel()">
+              </mat-checkbox>
+            </th>
+            <td mat-cell *matCellDef="let row">
+              <mat-checkbox (click)="$event.stopPropagation()"
+                            (change)="$event ? selection.toggle(row) : null"
+                            [checked]="selection.isSelected(row)"
+                            [aria-label]="checkboxLabel(row)">
+              </mat-checkbox>
+            </td>
+          </ng-container>
+
+          <!-- Position Column -->
+          <ng-container matColumnDef="position">
+            <th mat-header-cell *matHeaderCellDef> No. </th>
+            <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+          </ng-container>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Name </th>
+            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+          </ng-container>
+
+          <!-- Weight Column -->
+          <ng-container matColumnDef="weight">
+            <th mat-header-cell *matHeaderCellDef> Weight </th>
+            <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+          </ng-container>
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="symbol">
+            <th mat-header-cell *matHeaderCellDef> Symbol </th>
+            <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"
+              (click)="selection.toggle(row); consoleSelection()">
+          </tr>
+        </table>
+      </div>
+      <mat-divider></mat-divider>
+      <mat-paginator [length]="100"
+                [pageSize]="10"
+                [pageSizeOptions]="[5, 10, 25, 100]">
+      </mat-paginator>
+     </div>
+   </td-layout-manage-list>
+  </div>
+</div>
